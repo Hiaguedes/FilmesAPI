@@ -12,11 +12,12 @@ public class FilmeController
     private static int ControllerId = 0;
     
     [HttpPost]
-    public void AdicionaFilme([FromBody] Filme filme)
+    public ObjectResult AdicionaFilme([FromBody] Filme filme)
     {
         filme.Id = ControllerId++;
         filmes.Add(filme);
         Console.WriteLine(filme.Titulo); 
+        return new ObjectResult( filme) { StatusCode =  StatusCodes.Status201Created };
     }
 
     [HttpGet]
@@ -26,16 +27,16 @@ public class FilmeController
     }
 
     [HttpGet("{id}")]
-    public IActionResult BuscaFilmePorId(int id)
+    public ObjectResult BuscaFilmePorId(int id)
     {
         Filme filmeBuscado = filmes.FirstOrDefault(film => film.Id == id);
 
         if (filmeBuscado != null)
         {
-            return Ok(filmeBuscado);
+            return new OkObjectResult(filmeBuscado);
         }
 
-        return NotFound();
+        return new NotFoundObjectResult(null);
 
     }
     

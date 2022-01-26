@@ -1,0 +1,16 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "a5ac47ff-e5f5-4c14-9766-9df5a0ce02b8": {
+      "ProjectGuid": "a5ac47ff-e5f5-4c14-9766-9df5a0ce02b8",
+      "DisplayName": "FilmesAPI",
+      "ColorIndex": 0
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Arquivos Diversos",
+      "ColorIndex": -1
+    }
+  },
+  "NextColorIndex": 1
+}

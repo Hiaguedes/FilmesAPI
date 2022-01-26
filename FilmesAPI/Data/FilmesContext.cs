@@ -1,18 +1,16 @@
 using FilmesAPI.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Configuration;
 
 namespace FilmesAPI.Data
 {
     public class FilmesContext : DbContext
     {
-
-        public DbSet<Filme> Filmes { get; set; }
-
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public FilmesContext(DbContextOptions<FilmesContext> opt) : base(opt)
         {
-            optionsBuilder.UseSqlServer(ConfigurationManager.ConnectionStrings["FilmeConnection"].ConnectionString);
+
         }
-    }
+
+        public DbSet<Filme> Filme {get; set;}
+} 
+
 }

@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FilmesAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220329210900_Relacionamento-1to1-Cinema-Endereco")]
-    partial class Relacionamento1to1CinemaEndereco
+    [Migration("20220329230814_CriandoTablea")]
+    partial class CriandoTablea
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

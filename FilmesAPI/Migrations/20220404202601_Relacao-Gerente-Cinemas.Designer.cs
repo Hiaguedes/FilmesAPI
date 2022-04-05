@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FilmesAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220329204729_Cinema-Endereco-Filme-Controllers")]
-    partial class CinemaEnderecoFilmeControllers
+    [Migration("20220404202601_Relacao-Gerente-Cinemas")]
+    partial class RelacaoGerenteCinemas
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -31,16 +31,27 @@ namespace FilmesAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int>("EnderecoId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("GerenteId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("EnderecoId")
+                        .IsUnique();
+
+                    b.HasIndex("GerenteId");
+
                     b.ToTable("Cinemas");
                 });
 
-            modelBuilder.Entity("FilmesApi.Models.Endereco", b =>
+            modelBuilder.Entity("FilmesAPI.Models.Endereco", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -94,6 +105,53 @@ namespace FilmesAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Filmes");
+                });
+
+            modelBuilder.Entity("FilmesAPI.Models.Gerente", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Gerentes");
+                });
+
+            modelBuilder.Entity("FilmesAPI.Models.Cinema", b =>
+                {
+                    b.HasOne("FilmesAPI.Models.Endereco", "Endereco")
+                        .WithOne("Cinema")
+                        .HasForeignKey("FilmesAPI.Models.Cinema", "EnderecoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FilmesAPI.Models.Gerente", "Gerente")
+                        .WithMany("Cinemas")
+                        .HasForeignKey("GerenteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Endereco");
+
+                    b.Navigation("Gerente");
+                });
+
+            modelBuilder.Entity("FilmesAPI.Models.Endereco", b =>
+                {
+                    b.Navigation("Cinema")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("FilmesAPI.Models.Gerente", b =>
+                {
+                    b.Navigation("Cinemas");
                 });
 #pragma warning restore 612, 618
         }
